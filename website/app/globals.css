@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sprout-green: #43B02A;
+  --color-sprout-green-hover: #389623;
+  --color-sprout-blue: #0E5A9C;
+  --color-sprout-blue-hover: #0a467b;
+  --color-sprout-ink: #111111;
+  --color-sprout-muted: #555555;
+  --color-sprout-line: #E5E7EB;
+  --color-sprout-paper: #FAFAFA;
+}
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #111111;
+  --card-bg: #FFFFFF;
+  --border-color: #E5E7EB;
+  --sprout-green: #43B02A;
+  --sprout-blue: #0E5A9C;
+  --sprout-ink: #111111;
+  --sprout-muted: #555555;
+}
+
+.dark {
+  --background: #0A0D12;
+  --foreground: #F3F4F6;
+  --card-bg: #111622;
+  --border-color: #1F2937;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism effects */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+}
+
+.dark .glass-panel {
+  background: rgba(17, 22, 34, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #1F2937;
+}
+
+/* Gradient text accents */
+.sprout-gradient-text {
+  background: linear-gradient(135deg, #43B02A 0%, #0E5A9C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sprout-gradient-bg {
+  background: linear-gradient(135deg, #43B02A 0%, #0E5A9C 100%);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #374151;
+}
+
+/* Monospace font for Marathi Code Blocks */
+.font-marathi-code {
+  font-family: var(--font-geist-mono), 'Consolas', 'Fira Code', 'Noto Sans Devanagari', monospace;
+}
