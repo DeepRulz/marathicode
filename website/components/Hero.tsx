@@ -56,7 +56,7 @@ export function Hero() {
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-marathi-code leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-marathi-code  leading-[1.5] overflow-visible">
               <span className="text-gray-900 dark:text-white block">कोडिंग शिका</span>
               <span className="sprout-gradient-text block">तुमच्या स्वाभिमानी भाषेत</span>
             </h1>
