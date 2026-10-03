@@ -43,7 +43,7 @@ export function Hero() {
       {/* Decorative Glow Elements */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-[#43B02A]/15 to-[#0E5A9C]/15 blur-[100px] pointer-events-none rounded-full" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           {/* Left Column: Hero Content */}
