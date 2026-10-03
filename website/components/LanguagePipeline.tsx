@@ -50,14 +50,15 @@ const PIPELINE_STAGES = [
 
 export function LanguagePipeline() {
     return (
-        <section className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-10 space-y-10">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             {/* Header */}
             <div className="space-y-2">
-                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+                <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                     How MarathiCode Works
                 </h2>
-                <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+
+                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                     From Marathi Devanagari text to execution: a classic programming-language architecture.
                 </p>
             </div>
@@ -72,18 +73,17 @@ export function LanguagePipeline() {
                         <div
                             key={stage.id}
                             className="
-                min-h-[235px]
-                p-6
-                rounded-2xl
-                text-left
-                border border-gray-200
-                dark:border-gray-800
-                bg-white
-                dark:bg-[#111622]
-                shadow-sm
-                flex flex-col
-                justify-between
-              "
+                                min-h-[235px]
+                                p-6
+                                rounded-2xl
+                                text-left
+                                border border-gray-200
+                                dark:border-gray-800
+                                bg-white
+                                dark:bg-[#111622]
+                                shadow-sm
+                                hover:border-gray-300 dark:hover:border-gray-700
+                            "
                         >
 
                             {/* Icon + Step */}
@@ -91,52 +91,50 @@ export function LanguagePipeline() {
 
                                 <div
                                     className="
-                    w-12 h-12
-                    rounded-xl
-                    bg-emerald-50
-                    dark:bg-emerald-950/60
-                    border
-                    border-emerald-200
-                    dark:border-emerald-800/60
-                    flex
-                    items-center
-                    justify-center
-                    text-[#43B02A]
-                  "
+                                        w-8 h-8
+                                        rounded-xl
+                                        bg-emerald-50
+                                        dark:bg-emerald-950/60
+                                        border
+                                        border-emerald-200
+                                        dark:border-emerald-800/60
+                                        flex
+                                        items-center
+                                        justify-center
+                                        text-[#43B02A]
+                                    "
                                 >
-                                    <Icon className="w-6 h-6" />
+                                    <Icon className="w-4 h-4" />
                                 </div>
 
-                                <span className="text-xs sm:text-sm font-mono text-gray-400">
-                  Step 0{idx + 1}
-                </span>
+                                <span className="text-[11px] font-bold text-gray-400">
+                                    Step 0{idx + 1}
+                                </span>
 
                             </div>
 
                             {/* Content */}
-                            <div className="space-y-3">
+                            <div className="mt-6 space-y-2">
 
                                 <h4
                                     className="
-                    text-base
-                    sm:text-lg
-                    font-bold
-                    text-gray-900
-                    dark:text-white
-                    leading-snug
-                  "
+                                        text-base
+                                        font-bold
+                                        text-gray-900
+                                        dark:text-white
+                                        leading-snug
+                                    "
                                 >
                                     {stage.name}
                                 </h4>
 
                                 <p
                                     className="
-                    text-sm
-                    sm:text-base
-                    leading-relaxed
-                    text-gray-600
-                    dark:text-gray-400
-                  "
+                                        text-sm
+                                        text-gray-600
+                                        dark:text-gray-400
+                                        leading-relaxed
+                                    "
                                 >
                                     {stage.description}
                                 </p>
@@ -148,7 +146,6 @@ export function LanguagePipeline() {
                 })}
 
             </div>
-
 
         </section>
     );
