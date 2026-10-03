@@ -1,12 +1,11 @@
 export const siteConfig = {
   name: "MarathiCode",
   tagline: "कोडिंग शिका तुमच्या स्वाभिमानी भाषेत",
-  description: "A beginner-friendly programming language featuring native Marathi Devanagari syntax, scoped functions, structured control flow, and real-time execution.",
+  description: "MarathiCode is a Marathi-native programming language developed by Sprout Tech to explore whether familiar language can make programming more approachable for beginners.",
   url: "https://marathicode.sprouttech.in",
   author: "Deep Shah",
   company: "Sprout Tech",
   companyUrl: "https://www.sprouttech.in",
-  github: "https://github.com/deepshah/marathicode",
   version: "1.0.0",
   colors: {
     green: "#43B02A",
@@ -19,16 +18,15 @@ export const siteConfig = {
   navLinks: [
     { name: "Overview", href: "/" },
     { name: "Documentation", href: "/docs" },
-    // { name: "Playground", href: "/playground" },
     { name: "Examples", href: "/examples" },
   ],
   keywords: [
-    { marathi: "चल", english: "VAR", description: "Variable declaration", example: "चल वय = १०" },
-    { marathi: "छापा", english: "PRINT", description: "Print statement", example: 'छापा("नमसकार")' },
+    { marathi: "चल", english: "VAR", description: "Variable declaration", example: "चल वय = १८" },
+    { marathi: "छापा", english: "PRINT", description: "Print statement", example: 'छापा("नमस्कार")' },
     { marathi: "जर", english: "IF", description: "If condition", example: "जर अ > १० तर { ... }" },
     { marathi: "तर", english: "THEN", description: "Then block qualifier", example: "जर खरे तर { ... }" },
     { marathi: "नाहीतर", english: "ELSE", description: "Else branch qualifier", example: "नाहीतर { ... }" },
-    { marathi: "पर्यंत", english: "WHILE", description: "While loop", example: "पर्यंत x < ५ { ... }" },
+    { marathi: "पर्यंत", english: "WHILE", description: "While loop", example: "पर्यंत counter <= ५ { ... }" },
     { marathi: "कार्य", english: "FUNCTION", description: "Function definition", example: "कार्य बेरीज(a, b) { ... }" },
     { marathi: "परत", english: "RETURN", description: "Return value", example: "परत a + b" },
     { marathi: "खरे", english: "TRUE", description: "Boolean true literal", example: "चल पास = खरे" },

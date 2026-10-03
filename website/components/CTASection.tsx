@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Terminal, ArrowRight, Sparkles, BookOpen } from "lucide-react";
+import { Terminal, ArrowRight, BookOpen, Code2 } from "lucide-react";
 
 export function CTASection() {
   return (
-    <section className="my-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="my-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#43B02A] via-[#2A821E] to-[#0E5A9C] p-8 md:p-12 text-white shadow-2xl">
         
         {/* Glow accent */}
@@ -11,16 +11,16 @@ export function CTASection() {
 
         <div className="relative z-10 max-w-2xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Sprout Tech Open Source Initiative</span>
+            <Code2 className="w-3.5 h-3.5" />
+            <span>Get Started with MarathiCode</span>
           </div>
 
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-            Ready to experience logic-first coding in Marathi?
+            Try MarathiCode
           </h2>
 
           <p className="text-white/90 text-base leading-relaxed">
-            Test programs in the interactive browser playground, inspect language documentation, or explore practical code examples.
+            Write a program, explore the syntax, and see Marathi programming in action.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">

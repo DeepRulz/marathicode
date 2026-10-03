@@ -21,10 +21,10 @@ export function Footer() {
               </span>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 max-w-sm leading-relaxed">
-              {siteConfig.description}
+              A Sprout Tech research project exploring native-language programming interfaces for accessible programming education.
             </p>
             <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-              <span>An language initiative by</span>
+              <span>Developed by</span>
               <a
                 href={siteConfig.companyUrl}
                 target="_blank"
@@ -36,34 +36,39 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Project Navigation */}
           <div>
             <h4 className="font-semibold text-sm text-gray-900 dark:text-white uppercase tracking-wider mb-4">
-              Resources
+              Project
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link href="/docs" className="text-gray-600 dark:text-gray-400 hover:text-[#43B02A] dark:hover:text-emerald-400 transition-colors">
-                  Documentation Hub
+                <Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-[#43B02A] dark:hover:text-emerald-400 transition-colors">
+                  Overview
                 </Link>
               </li>
               <li>
-                <Link href="/playground" className="text-gray-600 dark:text-gray-400 hover:text-[#43B02A] dark:hover:text-emerald-400 transition-colors">
-                  Interactive Playground
+                <Link href="/docs" className="text-gray-600 dark:text-gray-400 hover:text-[#43B02A] dark:hover:text-emerald-400 transition-colors">
+                  Documentation
                 </Link>
               </li>
               <li>
                 <Link href="/examples" className="text-gray-600 dark:text-gray-400 hover:text-[#43B02A] dark:hover:text-emerald-400 transition-colors">
-                  Code Examples
+                  Examples
+                </Link>
+              </li>
+              <li>
+                <Link href="/playground" className="text-gray-600 dark:text-gray-400 hover:text-[#43B02A] dark:hover:text-emerald-400 transition-colors">
+                  Playground
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Documentation Topics */}
+          {/* Language Topics */}
           <div>
             <h4 className="font-semibold text-sm text-gray-900 dark:text-white uppercase tracking-wider mb-4">
-              Language Topics
+              Language
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
@@ -73,7 +78,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/docs/variables" className="text-gray-600 dark:text-gray-400 hover:text-[#0E5A9C] dark:hover:text-sky-400 transition-colors">
-                  Variables & Data Types
+                  Variables & Assignment
                 </Link>
               </li>
               <li>
@@ -94,13 +99,8 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500 dark:text-gray-400">
           <div>
-            © {new Date().getFullYear()} MarathiCode. Author: <span className="font-medium text-gray-700 dark:text-gray-300">Deep Shah</span>.
+            <strong>MarathiCode</strong> · Developed by <strong>Sprout Tech</strong> · Research & Development by <strong>Deep Shah</strong>
           </div>
-          {/* <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1">
-              Powered by <span className="font-semibold text-[#43B02A]">Sprout Tech</span>
-            </span>
-          </div> */}
         </div>
       </div>
     </footer>

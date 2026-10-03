@@ -26,17 +26,17 @@ export function DocContent({ slug }: DocContentProps) {
           </div>
 
           <p className="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
-            Welcome to <strong>MarathiCode</strong>, an intuitive, educational programming language developed by <strong>Deep Shah at Sprout Tech</strong>. 
-            MarathiCode replaces English-centric keywords with familiar Marathi Devanagari terminology, enabling students and beginners to master algorithmic logic without being blocked by language barriers.
+            Welcome to <strong>MarathiCode</strong>, a Marathi-native programming language developed by <strong>Deep Shah at Sprout Tech</strong>. 
+            MarathiCode is designed to let beginners explore programming concepts using familiar Marathi terminology.
           </p>
 
           <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 p-6 space-y-3">
             <h3 className="font-bold text-[#0E5A9C] dark:text-sky-400 text-base flex items-center gap-2">
               <Globe className="w-5 h-5" />
-              <span>Core Language Philosophy</span>
+              <span>Core Language Focus</span>
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-              Programming is fundamentally about structure, logic, and problem-solving. By introducing control flow, functions, variables, and boolean conditions in Marathi, learners build strong computational thinking that seamlessly transfers to languages like Python, JavaScript, and C++.
+              The language focuses on programming concepts and logic using familiar Marathi terminology. Whether these skills transfer more effectively to other programming languages is a question for future study.
             </p>
           </div>
 
@@ -830,6 +830,48 @@ marathicode program.mr
         </div>
       );
 
+    case "language-processing":
+      return (
+        <div className="space-y-8">
+          <div className="border-b border-gray-200 dark:border-gray-800 pb-4">
+            <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">
+              Language Processing Architecture
+            </h1>
+            <p className="text-[#0E5A9C] dark:text-sky-400 font-mono text-sm mt-1">
+              Formal Grammar · Deterministic Parsing · Interpreter-Based Execution
+            </p>
+          </div>
+
+          <p className="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+            MarathiCode uses concepts related to linguistic processing at the programming-language level. Its lexer performs tokenization and maps Marathi keywords to programming tokens, while its parser applies a formal grammar to construct an abstract syntax tree.
+          </p>
+
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#111622] p-6 space-y-4">
+            <h3 className="font-bold text-gray-900 dark:text-white text-lg flex items-center gap-2">
+              <Cpu className="w-5 h-5 text-[#43B02A]" />
+              <span>Technical Classification & Distinction</span>
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              These techniques are related to lexical and syntactic processing, although MarathiCode is a <strong>formal programming language</strong> rather than a natural-language NLP system.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900/80 border border-gray-200 dark:border-gray-800 space-y-1">
+                <div className="text-xs font-bold text-[#43B02A]">1. Lexical Analysis</div>
+                <div className="text-[11px] text-gray-500">Tokenizes Devanagari text into deterministic keywords & literals.</div>
+              </div>
+              <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900/80 border border-gray-200 dark:border-gray-800 space-y-1">
+                <div className="text-xs font-bold text-[#0E5A9C] dark:text-sky-400">2. Context-Free Parsing</div>
+                <div className="text-[11px] text-gray-500">Constructs an Abstract Syntax Tree based on strict operator precedence rules.</div>
+              </div>
+              <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-900/80 border border-gray-200 dark:border-gray-800 space-y-1">
+                <div className="text-xs font-bold text-[#43B02A]">3. Tree-Walking Engine</div>
+                <div className="text-[11px] text-gray-500">Evaluates AST nodes directly within isolated stack-frame scopes.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+
     case "faq":
       return (
         <div className="space-y-8">
@@ -846,16 +888,26 @@ marathicode program.mr
             <div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#111622] space-y-2">
               <h3 className="font-bold text-gray-900 dark:text-white text-base flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-[#43B02A]" />
-                <span>Why create a programming language in Marathi?</span>
+                <span>What is MarathiCode?</span>
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                When beginners start learning to code, they often struggle first with unfamiliar English syntax instead of pure logic. MarathiCode lowers this barrier by using native terminology so learners can focus on logical problem-solving first.
+                MarathiCode is a Marathi-native programming language research project developed by Sprout Tech to explore whether programming in a learner's familiar language could reduce linguistic barriers to learning programming.
               </p>
             </div>
 
             <div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#111622] space-y-2">
               <h3 className="font-bold text-gray-900 dark:text-white text-base flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-[#0E5A9C] dark:text-sky-400" />
+                <span>Is MarathiCode a commercial product or open-source library?</span>
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                MarathiCode is a proprietary research project by Sprout Tech. It is designed as a working research prototype for language design and feasibility evaluation, and can be demonstrated live in our public web playground.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#111622] space-y-2">
+              <h3 className="font-bold text-gray-900 dark:text-white text-base flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-[#43B02A]" />
                 <span>Can I type numbers using Marathi Devanagari digits?</span>
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -865,7 +917,7 @@ marathicode program.mr
 
             <div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#111622] space-y-2">
               <h3 className="font-bold text-gray-900 dark:text-white text-base flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-[#43B02A]" />
+                <HelpCircle className="w-5 h-5 text-[#0E5A9C] dark:text-sky-400" />
                 <span>How do I type Marathi keywords if I don't have a Marathi keyboard?</span>
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/config";
-import { Terminal, Menu, X } from "lucide-react";
+import { Terminal, Menu, X, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -23,14 +23,9 @@ export function Navbar() {
             </div>
           </div>
           <div className="flex flex-col">
-            <div className="flex items-center gap-1.5">
-              <span className="font-bold text-lg tracking-tight text-gray-900 dark:text-white">
-                MarathiCode
-              </span>
-              <span className="text-[10px] font-semibold tracking-wider uppercase px-1.5 py-0.5 rounded bg-emerald-100 text-[#43B02A] dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40">
-                v1.0
-              </span>
-            </div>
+            <span className="font-bold text-lg tracking-tight text-gray-900 dark:text-white">
+              MarathiCode
+            </span>
             <span className="text-[11px] text-gray-500 dark:text-gray-400 flex items-center gap-1">
               by <span className="font-medium text-[#0E5A9C] dark:text-sky-400">Sprout Tech</span>
             </span>

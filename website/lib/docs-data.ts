@@ -17,6 +17,7 @@ export const DOC_TOPICS: DocTopic[] = [
   { title: "Functions & Scope", marathi: "कार्य व स्कोप (Functions)", slug: "functions", category: "Control Flow & Functions" },
   { title: "Output & Built-in Functions", marathi: "छापा विधाने (Built-in)", slug: "builtin-functions", category: "Control Flow & Functions" },
   { title: "Keywords Reference", marathi: "कीवर्ड्स संदर्भ", slug: "keywords", category: "Reference & Examples" },
+  { title: "Language Processing Architecture", marathi: "भाषा प्रक्रिया रचना", slug: "language-processing", category: "Reference & Examples" },
   { title: "Error Messages & Diagnostics", marathi: "त्रुटी संदेश व निदान", slug: "error-messages", category: "Reference & Examples" },
   { title: "Practical Examples", marathi: "व्यावहारिक उदाहरणे", slug: "examples", category: "Reference & Examples" },
   { title: "Frequently Asked Questions", marathi: "सतत विचारले जाणारे प्रश्न", slug: "faq", category: "Reference & Examples" },

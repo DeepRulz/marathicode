@@ -17,17 +17,33 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteConfig.name} - Official Language Website | ${siteConfig.company}`,
+    default: `${siteConfig.name} — Native-Language Programming | Sprout Tech`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ["MarathiCode", "Marathi Programming Language", "Sprout Tech", "Devanagari Compiler", "AST", "PLY"],
+  keywords: [
+    "MarathiCode",
+    "Marathi Native Programming Language",
+    "Sprout Tech",
+    "Accessible Coding Education",
+    "Devanagari AST",
+    "Programming Language Research",
+  ],
   authors: [{ name: siteConfig.author, url: siteConfig.companyUrl }],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: siteConfig.name,
+    title: `${siteConfig.name} — Native-Language Programming | Sprout Tech`,
     description: siteConfig.description,
     siteName: siteConfig.name,
   },

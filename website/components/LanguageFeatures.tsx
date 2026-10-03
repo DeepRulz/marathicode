@@ -1,0 +1,80 @@
+import Link from "next/link";
+import { Code2, Layers, Cpu, ArrowRight, GitBranch } from "lucide-react";
+
+const FEATURE_GROUPS = [
+  {
+    title: "Marathi Syntax",
+    marathi: "मराठी वाक्यरचना",
+    desc: "Native Marathi keywords and Devanagari identifiers.",
+    icon: Code2,
+  },
+  {
+    title: "Core Logic",
+    marathi: "मूलभूत लॉजिक",
+    desc: "Variables, expressions, comparisons and logical operations.",
+    icon: Layers,
+  },
+  {
+    title: "Control Flow",
+    marathi: "नियंत्रण प्रवाह",
+    desc: "Conditionals and loops.",
+    icon: GitBranch,
+  },
+  {
+    title: "Functions",
+    marathi: "कार्ये व स्कोप",
+    desc: "Functions, parameters, scopes and return values.",
+    icon: Cpu,
+  },
+];
+
+export function LanguageFeatures() {
+  return (
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-gray-200 dark:border-gray-800 pb-4">
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+            Language Features
+          </h2>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            Core programming primitives supported by the MarathiCode engine.
+          </p>
+        </div>
+        <Link
+          href="/docs"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#43B02A] dark:text-emerald-400 hover:underline shrink-0"
+        >
+          <span>View full language documentation</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {FEATURE_GROUPS.map((item, idx) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={idx}
+              className="p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#111622] space-y-2.5 hover:border-gray-300 dark:hover:border-gray-700 transition-all"
+            >
+              <div className="flex items-center justify-between">
+                <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/60 flex items-center justify-center text-[#43B02A]">
+                  <Icon className="w-4 h-4" />
+                </div>
+                <span className="text-[11px] font-bold text-[#0E5A9C] dark:text-sky-400 font-marathi-code">
+                  {item.marathi}
+                </span>
+              </div>
+              <h3 className="text-sm font-bold text-gray-900 dark:text-white">
+                {item.title}
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                {item.desc}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}

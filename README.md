@@ -1,105 +1,34 @@
-# Marathi Programming Language (Experimental)
+# MarathiCode — Sprout Tech Research Project
 
-This repository contains an experimental programming language implementation written in Python.
-The language uses Marathi-inspired keywords and syntax and was built mainly as a learning exercise in
-language design, parsing, and interpretation.
+MarathiCode is a Marathi-native programming language developed by Sprout Tech to explore whether programming in a learner's familiar/native language could reduce linguistic barriers to learning programming.
 
-This is **not a production system**. It is a prototype created to explore ideas.
+This is a **research prototype and programming-language project**.
 
 ---
 
-## Why this project
+## Positioning & Research Scope
 
-When beginners, especially younger students, are introduced to programming,
-they often struggle first with **unfamiliar language**, not logic.
+MarathiCode is a **proprietary research project by Sprout Tech**.
 
-This project started with a simple question:
-
-> Can familiarity (language, words, structure) make the first interaction with coding feel less intimidating?
-
-The idea was to explore whether using **Marathi-style keywords and syntax**
-could help younger learners focus on *thinking logically* before worrying about English-heavy syntax.
-
-This is meant as an **entry point**, not a replacement for mainstream programming languages.
+- **Research Focus**: Language design, Devanagari lexical/syntactic analysis, AST construction, and interpreter architecture.
+- **Educational Hypothesis**: Explores whether familiar Marathi terminology and Devanagari identifiers make computational thinking more approachable for beginners.
+- **Status**: Research prototype. Measuring learning outcomes in controlled user studies is a future research direction.
 
 ---
 
-## What’s inside
+## Technical Pipeline
 
-The project implements a small language pipeline:
+The language implementation includes:
 
-- Lexer (tokenization)
-- Parser (AST generation)
-- AST node definitions
-- Basic execution / code generation
-- A simple CLI to run `.mr` files
-- Minimal test cases for lexer and parser
-
-The implementation is intentionally simple and readable.
-
-Example programs are available in the `examples/` directory and are written
-to resemble the kind of problems beginners usually start with.
+- Lexer (tokenization of Marathi keywords and Unicode Devanagari identifiers)
+- Parser (PLY LALR(1) context-free grammar parsing)
+- AST Node Definitions
+- Interpreter / Code Execution
+- Interactive Web Demonstration Playground
 
 ---
 
-## Repository layout
+## Ownership & Credits
 
-marathi-lang
-
-├── marathi/ # Core implementation 
-
-├── examples/ # Sample programs
-
-├── README.md
-
-├── LICENSE
-
-└── .gitignore
-
-
----
-
-## Current state
-
-Status: **Experimental / Prototype**
-
-Things this project does **not** aim to be:
-- A finished language
-- A scalable or optimized system
-- An officially deployed educational product
-
-This repository documents exploration and learning.
-Any real-world classroom or institutional use would require
-separate evaluation, redesign, and validation.
-
----
-
-## Notes and learnings
-
-While working on this project, I learned a lot about:
-- Writing lexers and parsers
-- AST-based execution
-- Language design trade-offs
-- How familiarity can lower the initial barrier to learning
-- The practical limits of taking experimental ideas into formal systems
-
-These learnings are the main outcome of this work.
-
----
-
-## License
-
-Licensed under the **Apache License 2.0**.
-
-You are free to use and adapt the code with attribution.
-Authorship may not be misrepresented.
-
-See `LICENSE` for details.
-
----
-
-## Author
-
-Deep Shah
-
-This repository exists as a public record of independent work and experimentation.
+- Developed by **Sprout Tech**
+- Research & Development by **Deep Shah**
