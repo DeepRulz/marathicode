@@ -21,8 +21,8 @@ import {
 const SAMPLE_PROGRAMS = [
   {
     name: "hello.mr",
-    label: "१. नमसकार (Hello World)",
-    code: `छापा("नमसकार")`,
+    label: "१. नमस्कार (Hello World)",
+    code: `छापा("नमस्कार मराठी कोड!")`,
   },
   {
     name: "add.mr",
@@ -32,40 +32,50 @@ const SAMPLE_PROGRAMS = [
 छापा(अ + म)`,
   },
   {
-    name: "if.mr",
-    label: "३. जर-नाहीतर (If Else)",
-    code: `चल अ = १०
-जर अ > ११ तर {
-    छापा("खरे")
+    name: "else_if.mr",
+    label: "३. जर-नाहीतर जर (Else-If Conditional)",
+    code: `चल गुण = ७५
+जर गुण > ९० तर {
+    छापा("विशेष गुणवत्ता")
+} नाहीतर जर गुण > ६० तर {
+    छापा("प्रथम श्रेणी")
 } नाहीतर {
-    छापा("खोटे")
+    छापा("उत्तीर्ण")
 }`,
   },
   {
-    name: "rectangle_function.mr",
-    label: "४. आयत कार्य (Function Calculation)",
-    code: `कार्य क्षेत्र(ल, म) {
-    परत ल * म
-}
-
-कार्य परिमिती(ल, म) {
-    परत 2 * (ल + म)
-}
-
-चल a = क्षेत्र(10, 20)
-चल p = परिमिती(10, 20)
-
-छापा(a)
-छापा(p)`,
+    name: "for_loop.mr",
+    label: "४. साठी लूप (Counted For Loop)",
+    code: `साठी (i = १; i <= ५; i = i + १) {
+    जर i == ३ तर {
+        छापा("३ वर पुढे जा")
+        आगे // continue
+        पुढे
+    }
+    छापा(i)
+}`,
   },
   {
-    name: "while_loop.mr",
-    label: "५. पर्यंत लूप (While Loop Counter)",
-    code: `चल संख्या = १
-पर्यंत संख्या <= ५ {
-    छापा(संख्या)
-    चल संख्या = संख्या + १
-}`,
+    name: "lists.mr",
+    label: "५. यादी क्रिया (Lists & Built-ins)",
+    code: `चल फळे = ["आंबा", "केळी"]
+छापा("सुरवातीची लांबी: " + लांबी(फळे))
+
+जोडा(फळे, "सफरचंद")
+छापा("नवीन लांबी: " + लांबी(फळे))
+छापा("तिसरे फळ: " + फळे[२])`,
+  },
+  {
+    name: "functions.mr",
+    label: "६. कार्य गणिते (Functions)",
+    code: `कार्य फॅक्टोरिअल(n) {
+    जर n <= १ तर {
+        परत १
+    }
+    परत n * फॅक्टोरिअल(n - १)
+}
+
+छापा("५ चे फॅक्टोरिअल: " + फॅक्टोरिअल(५))`,
   },
 ];
 
@@ -75,7 +85,6 @@ export function PlaygroundEditor() {
   const [result, setResult] = useState<ExecutionResult | null>(null);
   const [isExecuting, setIsExecuting] = useState(false);
   const [copied, setCopied] = useState(false);
-
 
   const editorRef = useRef<any>(null);
 

@@ -4,10 +4,14 @@ import {
   BlockNode,
   IfNode,
   WhileNode,
+  ForNode,
+  BreakNode,
+  ContinueNode,
   FunctionDefNode,
   FunctionCallNode,
   ReturnNode,
   AssignmentNode,
+  ListAssignNode,
   PrintNode,
   BinaryOpNode,
   UnaryOpNode,
@@ -15,6 +19,8 @@ import {
   StringNode,
   BooleanNode,
   VariableNode,
+  ListLiteralNode,
+  ListIndexNode,
 } from "./ast";
 
 export class Parser {
@@ -33,7 +39,6 @@ export class Parser {
     return statements;
   }
 
-  // Helper Methods
   private peek(): Token {
     return this.tokens[this.current];
   }
@@ -76,21 +81,45 @@ export class Parser {
     );
   }
 
-  // Statement Parsing
   private statement(): ASTNode {
-    if (this.match("VAR")) return this.assignmentStatement();
+    if (this.match("VAR")) return this.assignmentStatement(true);
     if (this.match("PRINT")) return this.printStatement();
     if (this.match("IF")) return this.ifStatement();
     if (this.match("WHILE")) return this.whileStatement();
+    if (this.match("FOR")) return this.forStatement();
+    if (this.match("BREAK")) return { type: "Break" };
+    if (this.match("CONTINUE")) return { type: "Continue" };
     if (this.match("FUNCTION")) return this.functionDefStatement();
     if (this.match("RETURN")) return this.returnStatement();
+
+    if (this.check("IDENTIFIER")) {
+      const name = this.advance().value;
+
+      // Reassignment or list assignment
+      if (this.match("EQUALS")) {
+        const expr = this.expression();
+        return { type: "Assignment", name, expression: expr };
+      }
+      if (this.match("LBRACKET")) {
+        const index = this.expression();
+        this.consume("RBRACKET", "']' आवश्यक आहे");
+        this.consume("EQUALS", "'=' आवश्यक आहे");
+        const expr = this.expression();
+        return { type: "ListAssign", name, index, expression: expr };
+      }
+      if (this.match("LPAREN")) {
+        const args = this.argList();
+        this.consume("RPAREN", "')' आवश्यक आहे");
+        return { type: "FunctionCall", name, args };
+      }
+    }
 
     throw new Error(
       `वाक्यरचना त्रुटी '${this.peek().value}' (ओळ ${this.peek().line})`
     );
   }
 
-  private assignmentStatement(): AssignmentNode {
+  private assignmentStatement(isDecl: boolean = false): AssignmentNode {
     const nameToken = this.consume("IDENTIFIER", "चल चे नाव आवश्यक आहे");
     this.consume("EQUALS", "'=' चिन्ह आवश्यक आहे");
     const expr = this.expression();
@@ -115,10 +144,15 @@ export class Parser {
     const condition = this.expression();
     this.consume("THEN", "'तर' आवश्यक आहे");
     const thenBlock = this.block();
-    let elseBlock: BlockNode | undefined = undefined;
+    let elseBlock: BlockNode | IfNode | undefined = undefined;
 
     if (this.match("ELSE")) {
-      elseBlock = this.block();
+      if (this.check("IF")) {
+        this.advance(); // consume 'जर' in 'नाहीतर जर'
+        elseBlock = this.ifStatement();
+      } else {
+        elseBlock = this.block();
+      }
     }
 
     return {
@@ -135,6 +169,34 @@ export class Parser {
     return {
       type: "While",
       condition,
+      body,
+    };
+  }
+
+  private forStatement(): ForNode {
+    this.consume("LPAREN", "'(' आवश्यक आहे");
+    let isVar = this.match("VAR");
+    const initName = this.consume("IDENTIFIER", "लूप व्हेरिएबल आवश्यक आहे").value;
+    this.consume("EQUALS", "'=' आवश्यक आहे");
+    const initExpr = this.expression();
+    const init: AssignmentNode = { type: "Assignment", name: initName, expression: initExpr };
+    this.consume("SEMICOLON", "';' आवश्यक आहे");
+
+    const condition = this.expression();
+    this.consume("SEMICOLON", "';' आवश्यक आहे");
+
+    const updateName = this.consume("IDENTIFIER", "लूप अपडेट व्हेरिएबल आवश्यक आहे").value;
+    this.consume("EQUALS", "'=' आवश्यक आहे");
+    const updateExpr = this.expression();
+    const update: AssignmentNode = { type: "Assignment", name: updateName, expression: updateExpr };
+    this.consume("RPAREN", "')' आवश्यक आहे");
+
+    const body = this.block();
+    return {
+      type: "For",
+      init,
+      condition,
+      update,
       body,
     };
   }
@@ -182,7 +244,17 @@ export class Parser {
     };
   }
 
-  // Expression Parsing (Precedence matching PLY Yacc)
+  private argList(): ASTNode[] {
+    const args: ASTNode[] = [];
+    if (!this.check("RPAREN")) {
+      do {
+        args.push(this.expression());
+      } while (this.match("COMMA"));
+    }
+    return args;
+  }
+
+  // Expression Parsing
   private expression(): ASTNode {
     return this.logicalOr();
   }
@@ -253,7 +325,17 @@ export class Parser {
       const operand = this.unary();
       return { type: "UnaryOp", operator, operand };
     }
-    return this.primary();
+    return this.indexAccess();
+  }
+
+  private indexAccess(): ASTNode {
+    let expr = this.primary();
+    while (this.match("LBRACKET")) {
+      const index = this.expression();
+      this.consume("RBRACKET", "']' आवश्यक आहे");
+      expr = { type: "ListIndex", target: expr, index };
+    }
+    return expr;
   }
 
   private primary(): ASTNode {
@@ -270,16 +352,21 @@ export class Parser {
       return { type: "Boolean", value: false };
     }
 
+    if (this.match("LBRACKET")) {
+      const elements: ASTNode[] = [];
+      if (!this.check("RBRACKET")) {
+        do {
+          elements.push(this.expression());
+        } while (this.match("COMMA"));
+      }
+      this.consume("RBRACKET", "']' आवश्यक आहे");
+      return { type: "ListLiteral", elements };
+    }
+
     if (this.match("IDENTIFIER")) {
       const name = this.previous().value;
-      // Function Call check
       if (this.match("LPAREN")) {
-        const args: ASTNode[] = [];
-        if (!this.check("RPAREN")) {
-          do {
-            args.push(this.expression());
-          } while (this.match("COMMA"));
-        }
+        const args = this.argList();
         this.consume("RPAREN", "')' आवश्यक आहे");
         return { type: "FunctionCall", name, args };
       }

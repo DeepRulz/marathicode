@@ -1,7 +1,6 @@
 "use client";
 
-import { Keyboard, HelpCircle } from "lucide-react";
-import { siteConfig } from "@/lib/config";
+import { Keyboard } from "lucide-react";
 
 interface MarathiKeyboardProps {
   onInsert: (text: string) => void;
@@ -15,6 +14,9 @@ export function MarathiKeyboard({ onInsert }: MarathiKeyboardProps) {
     { text: " तर ", label: "तर (THEN)", tooltip: "Then block qualifier" },
     { text: "नाहीतर ", label: "नाहीतर (ELSE)", tooltip: "Else branch" },
     { text: "पर्यंत ", label: "पर्यंत (WHILE)", tooltip: "While loop" },
+    { text: "साठी (", label: "साठी (FOR)", tooltip: "For loop" },
+    { text: "थांब", label: "थांब (BREAK)", tooltip: "Break loop" },
+    { text: "पुढे", label: "पुढे (CONTINUE)", tooltip: "Continue loop" },
     { text: "कार्य ", label: "कार्य (FUNCTION)", tooltip: "Define function" },
     { text: "परत ", label: "परत (RETURN)", tooltip: "Return statement" },
   ];
@@ -25,9 +27,12 @@ export function MarathiKeyboard({ onInsert }: MarathiKeyboardProps) {
     { text: " आणि ", label: "आणि (AND)", tooltip: "Logical AND" },
     { text: " किंवा ", label: "किंवा (OR)", tooltip: "Logical OR" },
     { text: "नाही ", label: "नाही (NOT)", tooltip: "Logical NOT" },
+    { text: "लांबी()", label: "लांबी()", tooltip: "List/String length" },
+    { text: "जोडा()", label: "जोडा()", tooltip: "List append" },
   ];
 
   const symbolsGroup = [
+    { text: " [ ]", label: "[ ]" },
     { text: " { }", label: "{ }" },
     { text: "( )", label: "( )" },
     { text: " = ", label: "=" },
@@ -76,10 +81,10 @@ export function MarathiKeyboard({ onInsert }: MarathiKeyboardProps) {
         ))}
       </div>
 
-      {/* Button Row 2: Logic & Booleans */}
+      {/* Button Row 2: Logic & Built-ins */}
       <div className="flex flex-wrap items-center gap-1.5 mb-2">
         <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mr-1">
-          Logic:
+          Logic & Functions:
         </span>
         {logicGroup.map((item, idx) => (
           <button

@@ -12,7 +12,10 @@ export type TokenType =
   | "RPAREN"
   | "LBRACE"
   | "RBRACE"
+  | "LBRACKET"
+  | "RBRACKET"
   | "COMMA"
+  | "SEMICOLON"
   | "GT"
   | "LT"
   | "GE"
@@ -25,6 +28,9 @@ export type TokenType =
   | "THEN"
   | "ELSE"
   | "WHILE"
+  | "FOR"
+  | "BREAK"
+  | "CONTINUE"
   | "FUNCTION"
   | "RETURN"
   | "TRUE"
@@ -47,6 +53,9 @@ export const RESERVED_KEYWORDS: Record<string, TokenType> = {
   "तर": "THEN",
   "नाहीतर": "ELSE",
   "पर्यंत": "WHILE",
+  "साठी": "FOR",
+  "थांब": "BREAK",
+  "पुढे": "CONTINUE",
   "कार्य": "FUNCTION",
   "परत": "RETURN",
   "खरे": "TRUE",
@@ -56,7 +65,6 @@ export const RESERVED_KEYWORDS: Record<string, TokenType> = {
   "नाही": "NOT",
 };
 
-// Helper to convert Devanagari digits to ASCII digits
 function parseMarathiNumber(str: string): number {
   const devanagariDigits: Record<string, string> = {
     '०': '0', '१': '1', '२': '2', '३': '3', '४': '4',
@@ -74,26 +82,22 @@ export function tokenize(source: string): Token[] {
   while (i < source.length) {
     const char = source[i];
 
-    // Newlines
     if (char === '\n') {
       line++;
       i++;
       continue;
     }
 
-    // Whitespace
     if (/\s/.test(char)) {
       i++;
       continue;
     }
 
-    // Comments (if any, e.g. // or #)
     if (source.startsWith('//', i)) {
       while (i < source.length && source[i] !== '\n') i++;
       continue;
     }
 
-    // Multi-character operators
     if (source.startsWith('>=', i)) {
       tokens.push({ type: 'GE', value: '>=', line });
       i += 2; continue;
@@ -111,7 +115,6 @@ export function tokenize(source: string): Token[] {
       i += 2; continue;
     }
 
-    // Single-character operators and punctuation
     if (char === '+') { tokens.push({ type: 'PLUS', value: '+', line }); i++; continue; }
     if (char === '-') { tokens.push({ type: 'MINUS', value: '-', line }); i++; continue; }
     if (char === '*') { tokens.push({ type: 'TIMES', value: '*', line }); i++; continue; }
@@ -121,16 +124,26 @@ export function tokenize(source: string): Token[] {
     if (char === ')') { tokens.push({ type: 'RPAREN', value: ')', line }); i++; continue; }
     if (char === '{') { tokens.push({ type: 'LBRACE', value: '{', line }); i++; continue; }
     if (char === '}') { tokens.push({ type: 'RBRACE', value: '}', line }); i++; continue; }
+    if (char === '[') { tokens.push({ type: 'LBRACKET', value: '[', line }); i++; continue; }
+    if (char === ']') { tokens.push({ type: 'RBRACKET', value: ']', line }); i++; continue; }
     if (char === ',') { tokens.push({ type: 'COMMA', value: ',', line }); i++; continue; }
+    if (char === ';') { tokens.push({ type: 'SEMICOLON', value: ';', line }); i++; continue; }
     if (char === '>') { tokens.push({ type: 'GT', value: '>', line }); i++; continue; }
     if (char === '<') { tokens.push({ type: 'LT', value: '<', line }); i++; continue; }
     if (char === '=') { tokens.push({ type: 'EQUALS', value: '=', line }); i++; continue; }
 
-    // Strings
+    // String literals with escape sequence support
     if (char === '"') {
       let strVal = '';
       i++; // Skip opening quote
       while (i < source.length && source[i] !== '"') {
+        if (source[i] === '\\' && i + 1 < source.length) {
+          const nextChar = source[i + 1];
+          if (nextChar === 'n') { strVal += '\n'; i += 2; continue; }
+          if (nextChar === 't') { strVal += '\t'; i += 2; continue; }
+          if (nextChar === '"') { strVal += '"'; i += 2; continue; }
+          if (nextChar === '\\') { strVal += '\\'; i += 2; continue; }
+        }
         if (source[i] === '\n') line++;
         strVal += source[i];
         i++;
@@ -143,7 +156,6 @@ export function tokenize(source: string): Token[] {
       continue;
     }
 
-    // Numbers (ASCII and Devanagari digits)
     if (/[0-9०-९]/.test(char)) {
       let numStr = '';
       while (i < source.length && /[0-9०-९\.]/.test(source[i])) {
@@ -154,7 +166,6 @@ export function tokenize(source: string): Token[] {
       continue;
     }
 
-    // Identifiers & Keywords (Supports ASCII + Devanagari range U+0900-U+097F)
     if (/[a-zA-Z_\u0900-\u097F]/.test(char)) {
       let idStr = '';
       while (i < source.length && /[a-zA-Z0-9_\u0900-\u097F]/.test(source[i])) {

@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: "MarathiCode",
   tagline: "कोडिंग शिका तुमच्या स्वाभिमानी भाषेत",
-  description: "MarathiCode is a Marathi-native programming language developed by Sprout Tech to explore whether familiar language can make programming more approachable for beginners.",
+  description: "MarathiCode is a Marathi-native programming language developed to explore whether familiar language can make programming more approachable for beginners.",
   url: "https://marathicode.sprouttech.in",
   author: "Deep Shah",
   company: "Sprout Tech",
   companyUrl: "https://www.sprouttech.in",
-  version: "1.0.0",
+  version: "0.1.0",
   colors: {
     green: "#43B02A",
     blue: "#0E5A9C",
@@ -25,8 +25,11 @@ export const siteConfig = {
     { marathi: "छापा", english: "PRINT", description: "Print statement", example: 'छापा("नमस्कार")' },
     { marathi: "जर", english: "IF", description: "If condition", example: "जर अ > १० तर { ... }" },
     { marathi: "तर", english: "THEN", description: "Then block qualifier", example: "जर खरे तर { ... }" },
-    { marathi: "नाहीतर", english: "ELSE", description: "Else branch qualifier", example: "नाहीतर { ... }" },
+    { marathi: "नाहीतर", english: "ELSE", description: "Else branch qualifier", example: "नाहीतर जर गुण > ६० तर { ... }" },
     { marathi: "पर्यंत", english: "WHILE", description: "While loop", example: "पर्यंत counter <= ५ { ... }" },
+    { marathi: "साठी", english: "FOR", description: "Counted for loop", example: "साठी (i = १; i <= ५; i = i + १) { ... }" },
+    { marathi: "थांब", english: "BREAK", description: "Break loop execution", example: "जर i == ३ तर { थांब }" },
+    { marathi: "पुढे", english: "CONTINUE", description: "Continue next loop iteration", example: "जर i % २ == ० तर { पुढे }" },
     { marathi: "कार्य", english: "FUNCTION", description: "Function definition", example: "कार्य बेरीज(a, b) { ... }" },
     { marathi: "परत", english: "RETURN", description: "Return value", example: "परत a + b" },
     { marathi: "खरे", english: "TRUE", description: "Boolean true literal", example: "चल पास = खरे" },
@@ -34,5 +37,7 @@ export const siteConfig = {
     { marathi: "आणि", english: "AND", description: "Logical AND operator", example: "जर x > ० आणि y > ० तर" },
     { marathi: "किंवा", english: "OR", description: "Logical OR operator", example: "जर x == १ किंवा y == १ तर" },
     { marathi: "नाही", english: "NOT", description: "Logical NOT operator", example: "जर नाही खोटे तर" },
+    { marathi: "लांबी", english: "BUILTIN", description: "Length of string/list", example: "छापा(लांबी(यादी))" },
+    { marathi: "जोडा", english: "BUILTIN", description: "Append element to list", example: "जोडा(यादी, मूल्य)" },
   ]
 } as const;
