@@ -3,91 +3,128 @@ import { Code2 } from "lucide-react";
 
 export const metadata = {
   title: "Code Examples",
-  description: "Explore practical MarathiCode programs demonstrating arithmetic, conditional branches, loops, and functions.",
+  description: "Official executable MarathiCode program examples demonstrating arithmetic, conditionals, loops, functions, and lists.",
 };
 
 const EXAMPLES_LIST = [
   {
-    title: "1. Hello World (नमसकार)",
+    title: "1. Hello World (नमस्कार)",
     filename: "hello.mr",
     description: "Simplest MarathiCode program demonstrating the print keyword छापा.",
-    code: `छापा("नमसकार")`,
-    expectedOutput: ["नमसकार"],
+    code: `छापा("नमस्कार मराठी कोड!")`,
+    expectedOutput: ["नमस्कार मराठी कोड!"],
     explanation: [
       "छापा is the built-in output function.",
-      '"नमसकार" is a double-quoted string literal.',
-      "Output displays नमसकार on standard output.",
+      '"नमस्कार मराठी कोड!" is a UTF-8 double-quoted string literal.',
+      "Output displays the text on stdout console.",
     ],
   },
   {
-    title: "2. Variable Addition (बेरीज)",
-    filename: "add.mr",
-    description: "Demonstrates variable declaration (चल) with mixed ASCII and Devanagari identifiers and floating-point math.",
+    title: "2. Variables & Devanagari Numerals (चल व अंक)",
+    filename: "variables.mr",
+    description: "Demonstrates variable declaration (चल) with ASCII and Devanagari numerals.",
     code: `चल अ = ४
-चल म = 5.8
-छापा( अ + म )`,
-    expectedOutput: ["9.8"],
+चल ब = 5.8
+चल संख्या = १२३
+छापा(अ + ब)
+छापा(संख्या)`,
+    expectedOutput: ["9.8", "123"],
     explanation: [
       "चल declares variable अ initialized to Devanagari digit ४ (4).",
-      "चल म stores standard decimal float 5.8.",
-      "छापा(अ + म) evaluates 4 + 5.8 to 9.8.",
+      "चल ब stores standard float 5.8.",
+      "Devanagari numeral १२३ evaluates directly to integer 123.",
     ],
   },
   {
-    title: "3. Conditional Logic (जर - नाहीतर)",
-    filename: "if.mr",
-    description: "Demonstrates conditional branching with जर (if), तर (then), and नाहीतर (else).",
-    code: `चल अ = १०
-जर अ > ११ तर {
-    छापा("खरे")
+    title: "3. Conditional Branching (जर - नाहीतर जर)",
+    filename: "else_if.mr",
+    description: "Demonstrates multi-branch conditionals with जर (if), नाहीतर जर (else-if), and नाहीतर (else).",
+    code: `चल गुण = ७५
+
+जर गुण > ९० तर {
+    छापा("विशेष गुणवत्ता")
+} नाहीतर जर गुण > ६० तर {
+    छापा("प्रथम श्रेणी")
 } नाहीतर {
-    छापा("खोटे")
+    छापा("उत्तीर्ण")
 }`,
-    expectedOutput: ["खोटे"],
+    expectedOutput: ["प्रथम श्रेणी"],
     explanation: [
-      "चल अ is set to 10.",
-      "The expression अ > 11 evaluates to खोटे (False).",
-      "The नाहीतर (else) block executes, printing खोटे.",
+      "Initializes variable गुण to 75.",
+      "Evaluates गुण > ९० (False), then evaluates गुण > ६० (True).",
+      "Executes the नाहीतर जर branch, printing प्रथम श्रेणी.",
     ],
   },
   {
-    title: "4. Functions & Return (क्षेत्रफळ व परिमिती)",
-    filename: "rectangle_function.mr",
-    description: "Demonstrates multi-parameter function definitions (कार्य) and return statements (परत).",
-    code: `कार्य क्षेत्र(ल, म) {
-    परत ल * म
-}
-
-कार्य परिमिती(ल, म) {
-    परत 2 * (ल + म)
-}
-
-चल a = क्षेत्र(10, 20)
-चल p = परिमिती(10, 20)
-छापा(a)
-छापा(p)`,
-    expectedOutput: ["200", "60"],
+    title: "4. Counted For Loop with Break & Continue (साठी - थांब / पुढे)",
+    filename: "for_loop.mr",
+    description: "Demonstrates counted loops (साठी), skipping iterations with पुढे (continue), and exiting with थांब (break).",
+    code: `साठी (i = १; i <= ५; i = i + १) {
+    जर i == ३ तर {
+        पुढे
+    }
+    जर i == ५ तर {
+        थांब
+    }
+    छापा(i)
+}`,
+    expectedOutput: ["1", "2", "4"],
     explanation: [
-      "Define function क्षेत्र (Area) taking length (ल) and width (म).",
-      "Define function परिमिती (Perimeter) taking length and width.",
-      "Evaluate क्षेत्र(10, 20) => 200.",
-      "Evaluate परिमिती(10, 20) => 2 * (10 + 20) = 60.",
+      "Initializes counter i = 1 up to 5.",
+      "When i == 3, पुढे skips printing and continues to next loop iteration.",
+      "When i == 5, थांब terminates loop execution.",
     ],
   },
   {
     title: "5. Counter Loop (पर्यंत लूप)",
     filename: "while_counter.mr",
-    description: "Demonstrates while loops (पर्यंत) incrementing a counter variable.",
+    description: "Demonstrates while loops (पर्यंत) repeating execution until condition becomes false.",
     code: `चल counter = १
-पर्यंत counter <= ५ {
+पर्यंत counter <= ३ {
     छापा(counter)
-    चल counter = counter + १
+    counter = counter + १
 }`,
-    expectedOutput: ["1", "2", "3", "4", "5"],
+    expectedOutput: ["1", "2", "3"],
     explanation: [
       "Initializes variable counter to 1.",
-      "Checks condition counter <= 5 on each iteration.",
-      "Increments counter by 1 until condition becomes false.",
+      "Evaluates condition counter <= 3 on each iteration.",
+      "Increments counter until condition becomes false.",
+    ],
+  },
+  {
+    title: "6. Functions & Recursion (फॅक्टोरिअल)",
+    filename: "factorial.mr",
+    description: "Demonstrates recursive function definitions (कार्य) and return statements (परत).",
+    code: `कार्य फॅक्टोरिअल(n) {
+    जर n <= १ तर {
+        परत १
+    }
+    परत n * फॅक्टोरिअल(n - १)
+}
+
+छापा(फॅक्टोरिअल(५))`,
+    expectedOutput: ["120"],
+    explanation: [
+      "Defines recursive function फॅक्टोरिअल accepting parameter n.",
+      "Base case checks if n <= 1 and returns 1.",
+      "Recursive case calculates n * फॅक्टोरिअल(n - 1). Evaluating फॅक्टोरिअल(5) returns 120.",
+    ],
+  },
+  {
+    title: "7. Lists & Nested Indexing (यादी क्रिया)",
+    filename: "lists.mr",
+    description: "Demonstrates list literals, nested matrix indexing, mutation, and built-in functions (लांबी, जोडा).",
+    code: `चल फळे = ["आंबा", "केळी"]
+जोडा(फळे, "सफरचंद")
+छापा(लांबी(फळे))
+
+चल matrix = [[१, २], [३, ४]]
+छापा(matrix[१][०])`,
+    expectedOutput: ["3", "3"],
+    explanation: [
+      "Appends 'सफरचंद' to list फळे using built-in function जोडा.",
+      "laamghi(फळे) returns updated list length 3.",
+      "Nested matrix indexing matrix[1][0] evaluates to 3.",
     ],
   },
 ];
@@ -104,11 +141,11 @@ export default function ExamplesPage() {
         </div>
 
         <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-          MarathiCode Practical Examples
+          MarathiCode Official Examples
         </h1>
 
         <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-3xl">
-          These code examples illustrate fundamental programming concepts written in MarathiCode. You can launch any example directly into the interactive playground.
+          A curated selection of 7 official executable MarathiCode v0.1 programs illustrating variables, conditionals, loops, functions, and lists.
         </p>
       </div>
 

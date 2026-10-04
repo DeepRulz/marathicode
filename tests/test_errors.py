@@ -1,6 +1,6 @@
 import unittest
 from marathi.parser import parser
-from marathi.codegen import Interpreter
+from marathi.interpreter import Interpreter
 from marathi.errors import (
     MarathiLexicalError, MarathiSyntaxError, MarathiRuntimeError,
     UndefinedVariableError, UndefinedFunctionError, ArgumentCountError, IndexOutOfBoundsError

@@ -92,24 +92,26 @@ class UnaryOp(ASTNode):
 # ---------- STATEMENTS ----------
 
 class Assignment(ASTNode):
-    def __init__(self, name, expression, lineno=None):
+    def __init__(self, name, expression, is_decl=False, lineno=None):
         self.name = name
         self.expression = expression
+        self.is_decl = is_decl
         self.lineno = lineno
 
     def __repr__(self):
-        return f"Assign({self.name}, {self.expression})"
+        decl_str = "var " if self.is_decl else ""
+        return f"Assign({decl_str}{self.name}, {self.expression})"
 
 
 class ListAssign(ASTNode):
-    def __init__(self, name, index, expression, lineno=None):
-        self.name = name
-        self.index = index
+    def __init__(self, target, index, expression, lineno=None):
+        self.target = target  # ASTNode
+        self.index = index    # ASTNode
         self.expression = expression
         self.lineno = lineno
 
     def __repr__(self):
-        return f"ListAssign({self.name}[{self.index}] = {self.expression})"
+        return f"ListAssign({self.target}[{self.index}] = {self.expression})"
 
 
 class Print(ASTNode):
@@ -134,7 +136,7 @@ class If(ASTNode):
     def __init__(self, condition, then_block, else_block=None, lineno=None):
         self.condition = condition
         self.then_block = then_block
-        self.else_block = else_block  # Can be Block or another If (for else-if)
+        self.else_block = else_block
         self.lineno = lineno
 
     def __repr__(self):

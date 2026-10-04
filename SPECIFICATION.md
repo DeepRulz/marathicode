@@ -1,21 +1,36 @@
 # MarathiCode Language Specification
 **Version 0.1 (Pre-Freeze Release)**  
-*Author: Deep Shah et al.*  
+*Author: Deep Shah et al. (Sprout Tech Research & Development)*  
 *Date: October 2026*
 
 ---
 
-## 1. Overview
-**MarathiCode** is an imperative, interpreted, dynamically-typed native-language programming language designed for the Marathi-speaking developer community and native-language computing research. It bridges natural Devanagari Marathi script semantics with modern programming language abstractions.
+## 1. Overview & Research Positioning
+**MarathiCode** is an imperative, interpreted, dynamically-typed native-language programming language designed to explore programming through Marathi-native syntax and Devanagari identifiers while retaining familiar programming-language structures.
+
+### Research Positioning Statement
+- MarathiCode investigates how a programming-language interface can be localized for Marathi while maintaining standard programming-language abstractions.
+- Whether native-language programming produces measurable educational benefits remains an open question for future empirical research.
+- MarathiCode acknowledges prior work in localized computing and Indian-language programming systems.
 
 This specification documents **MarathiCode Version 0.1**, defining the official lexical tokens, grammar, scope environment model, type system, error interface, and operational semantics prior to formal software copyright registration.
 
 ---
 
-## 2. Lexical Structure
+## 2. Design Rationale
+- **Marathi Keywords & Devanagari Identifiers**: Enables natural reading in Devanagari script without requiring English keyword memorization for control flow constructs.
+- **Conventional Structural Alignment**: Retains standard imperative control flow (blocks, functions, recursion, loops) so concepts transfer directly to conventional languages.
+- **Brace-Delimited Blocks (`{ ... }`)**: Provides explicit, unambiguous scope boundaries across lexical analysis.
+- **AST-Based Interpretation**: Uses an abstract syntax tree parser and environment machine for clear, inspectable execution semantics.
+- **Unicode First**: Full native support for Devanagari script (`U+0900` to `U+097F`) alongside ASCII digits and text.
+- **Localized Diagnostics**: Error reporting provides line numbers, column pointers (`^`), and Marathi error labels for improved developer experience.
+
+---
+
+## 3. Lexical Structure
 MarathiCode source files use UTF-8 encoding with standard `.mr` extension.
 
-### 2.1 Whitespace & Comments
+### 3.1 Whitespace & Comments
 - Whitespace (spaces, tabs, newlines) serves as token separators and line counters.
 - Single-line comments begin with `//` and extend to the end of the line.
 
@@ -23,18 +38,18 @@ MarathiCode source files use UTF-8 encoding with standard `.mr` extension.
 // हा एक टिप्पणी संदेश आहे (This is a comment)
 ```
 
-### 2.2 Character Set
+### 3.2 Character Set
 - Keywords, identifiers, and literals support ASCII and the Unicode Devanagari range (`U+0900` to `U+097F`).
 
 ---
 
-## 3. Keywords
+## 4. Keywords
 MarathiCode features 16 reserved keywords written in native Devanagari Marathi:
 
 | Keyword | English Equivalent | Category | Description |
 | :--- | :--- | :--- | :--- |
-| `चल` | `var` | Variable | Declares a local or global variable |
-| `छापा` | `print` | IO | Outputs an expression to stdout |
+| `चल` | `var` | Variable | Declares a variable in the current block/global scope |
+| `छापा` | `print` | IO | Outputs an expression to standard output |
 | `जर` | `if` | Conditional | Begins a conditional statement |
 | `तर` | `then` | Conditional | Qualifies the condition execution block |
 | `नाहीतर` | `else` | Conditional | Specifies the fallback or else-if branch |
@@ -52,26 +67,26 @@ MarathiCode features 16 reserved keywords written in native Devanagari Marathi:
 
 ---
 
-## 4. Identifiers
+## 5. Identifiers
 Identifiers name variables, functions, and parameters.
 
-### 4.1 Syntax Rules
+### 5.1 Syntax Rules
 - Must begin with an ASCII letter (`a-z`, `A-Z`), underscore (`_`), or Devanagari character (`\u0900-\u097F`).
 - Subsequent characters may include ASCII/Devanagari digits (`0-9`, `०-९`).
 - Cannot match any reserved keyword.
 
-### 4.2 Examples
+### 5.2 Examples
 `वय`, `एकूण_गुण`, `बेरीज1`, `_संख्या`
 
 ---
 
-## 5. Literals
+## 6. Literals
 MarathiCode supports numbers, strings, booleans, and list literals.
 
-### 5.1 Number Literals
+### 6.1 Number Literals
 Supports ASCII (`10`, `3.14`) and Devanagari digits (`१०`, `३.१४`). Represented internally as 64-bit IEEE double floats or integers.
 
-### 5.2 String Literals
+### 6.2 String Literals
 Enclosed in double quotes (`"..."`). Supports escape sequences:
 - `\n` : Newline
 - `\t` : Tab
@@ -82,10 +97,10 @@ Enclosed in double quotes (`"..."`). Supports escape sequences:
 "नमस्कार\nमराठी \"कोड\""
 ```
 
-### 5.3 Boolean Literals
+### 6.3 Boolean Literals
 `खरे` (True) and `खोटे` (False).
 
-### 5.4 List Literals
+### 6.4 List Literals
 Comma-separated expressions within square brackets (`[...]`).
 
 ```marathi
@@ -94,16 +109,16 @@ Comma-separated expressions within square brackets (`[...]`).
 
 ---
 
-## 6. Operators
+## 7. Operators
 
-### 6.1 Arithmetic Operators
+### 7.1 Arithmetic Operators
 - `+` Addition / String concatenation
 - `-` Subtraction
 - `*` Multiplication
 - `/` Division
 - `%` Modulo
 
-### 6.2 Comparison Operators
+### 7.2 Comparison Operators
 - `==` Equals
 - `!=` Not equals
 - `>` Greater than
@@ -111,14 +126,14 @@ Comma-separated expressions within square brackets (`[...]`).
 - `>=` Greater than or equal
 - `<=` Less than or equal
 
-### 6.3 Logical Operators
-- `आणि` Logical AND
-- `किंवा` Logical OR
+### 7.3 Logical Operators
+- `आणि` Short-circuit Logical AND
+- `किंवा` Short-circuit Logical OR
 - `नाही` Logical Negation (Unary)
 
 ---
 
-## 7. Expressions
+## 8. Expressions & Precedence
 Expressions evaluate to values. Operator precedence from highest to lowest:
 
 1. Primary (`IDENTIFIER`, `NUMBER`, `STRING`, `BOOLEAN`, `[...]`, `(expr)`)
@@ -127,23 +142,29 @@ Expressions evaluate to values. Operator precedence from highest to lowest:
 4. Multiplicative (`*`, `/`, `%`)
 5. Additive (`+`, `-`)
 6. Relational (`>`, `<`, `>=`, `<=`, `==`, `!=`)
-7. Logical AND (`आणि`)
-8. Logical OR (`किंवा`)
+7. Short-circuit Logical AND (`आणि`)
+8. Short-circuit Logical OR (`किंवा`)
 
 ---
 
-## 8. Variables
-Variables are declared using `चल` and assigned with `=`.
+## 9. Variables & Block Scope
+Variables declared with `चल` exist in the current block scope. Reassignments update existing variable bindings in the scope hierarchy.
 
 ```marathi
-चल वय = 25
-वय = 26 // Reassignment
+चल x = 100
+
+जर खरे तर {
+    चल x = 200  // Shadowed inside block
+    छापा(x)     // Prints 200
+}
+
+छापा(x)         // Prints 100 (Outer scope preserved)
 ```
 
 ---
 
-## 9. Conditional Statements
-Conditionals evaluate expressions and execute corresponding code blocks. Supports `नाहीतर जर` (else-if).
+## 10. Conditional Statements
+Supports `जर-तर`, `नाहीतर`, and `नाहीतर जर` (else-if).
 
 ```marathi
 जर गुण > 90 तर {
@@ -157,9 +178,9 @@ Conditionals evaluate expressions and execute corresponding code blocks. Support
 
 ---
 
-## 10. Loops
+## 11. Loops
 
-### 10.1 While Loop (`पर्यंत`)
+### 11.1 While Loop (`पर्यंत`)
 ```marathi
 चल i = 1
 पर्यंत i <= 5 {
@@ -168,10 +189,13 @@ Conditionals evaluate expressions and execute corresponding code blocks. Support
 }
 ```
 
-### 10.2 Counted For Loop (`साठी`)
+### 11.2 Counted For Loop (`साठी`) with `थांब` & `पुढे`
 ```marathi
 साठी (i = 1; i <= 10; i = i + 1) {
-    जर i == 5 तर {
+    जर i == 3 तर {
+        पुढे // Skip rest of iteration
+    }
+    जर i == 8 तर {
         थांब // Break loop
     }
     छापा(i)
@@ -180,8 +204,8 @@ Conditionals evaluate expressions and execute corresponding code blocks. Support
 
 ---
 
-## 11. Functions
-Defined with `कार्य` and return values with `परत`.
+## 12. Functions & Scope
+Functions are defined with `कार्य` and return values with `परत`.
 
 ```marathi
 कार्य बेरीज(a, b) {
@@ -193,24 +217,27 @@ Defined with `कार्य` and return values with `परत`.
 
 ---
 
-## 12. Lists & Built-in Functions
+## 13. Lists & Built-in Functions
 
-### 12.1 Indexing & Assignment
+### 13.1 Indexing & Nested Lists
 Zero-indexed using bracket notation:
 ```marathi
 चल संख्या = [10, 20, 30]
 छापा(संख्या[0]) // 10
-संख्या[1] = 99
+
+चल matrix = [[1, 2], [3, 4]]
+छापा(matrix[1][0]) // 3
+matrix[0][1] = 99
 ```
 
-### 12.2 Standard Built-ins
-- `लांबी(यादी_किंवा_स्ट्रिंग)`: Returns element count or character length.
+### 13.2 Standard Built-ins
+- `लांबी(यादी_किंवा_स्ट्रिंग)`: Returns element count or string length.
 - `जोडा(यादी, मूल्य)`: Appends value to list.
 
 ---
 
-## 13. Scope & Environment Model
-MarathiCode uses a hierarchical scope environment model:
+## 14. Scope Environment Architecture
+MarathiCode uses a parent-pointer scope environment hierarchy:
 
 ```
 Global Environment
@@ -220,36 +247,30 @@ Function Environment
 Block Environment
 ```
 
-1. **Global Scope**: Top-level declarations.
-2. **Function Scope**: Parameters and function-local variables.
-3. **Block Scope**: Variables declared inside `{ ... }` blocks.
-4. **Lookup Rule**: Unresolved identifiers traverse upwards to parent environment frames.
-
 ---
 
-## 14. Error Handling
-All lexical, syntax, and runtime exceptions output structured Marathi messages with line numbers and source caret pointers (`^`).
+## 15. Error Handling
+Outputs structured Marathi error messages with line numbers, column pointers (`^`), and code snippets.
 
 ```
 वाक्यरचना त्रुटी (Syntax Error)
 ओळ 4:
     जर x > तर {
           ^
-अपेक्षित अभिव्यक्ती.
+अपेक्षित अभिव्यक्ती किंवा अयोग्य विधान.
 ```
 
 ---
 
-## 15. Program Execution
-Command-line execution via CLI:
+## 16. Program Execution
+CLI invocation:
 ```bash
-marathicode program.mr
+python -m marathi.cli program.mr
 ```
-The interpreter reads source text, tokenizes through lexical analysis, constructs an AST via LALR parser, and executes nodes on the Environment machine.
 
 ---
 
-## 16. Formal Grammar (EBNF)
+## 17. Formal Grammar (EBNF)
 
 ```ebnf
 program          = { statement } ;
@@ -259,7 +280,7 @@ statement        = var_decl | assignment | list_assign | print_stmt
 
 var_decl         = "चल" IDENTIFIER "=" expression ;
 assignment       = IDENTIFIER "=" expression ;
-list_assign      = IDENTIFIER "[" expression "]" "=" expression ;
+list_assign      = expression "[" expression "]" "=" expression ;
 print_stmt       = "छापा" "(" expression ")" ;
 
 if_stmt          = "जर" expression "तर" block [ "नाहीतर" ( if_stmt | block ) ] ;
@@ -291,9 +312,9 @@ arg_list         = expression { "," expression } ;
 
 ---
 
-## 17. Examples
+## 18. Official Examples
 
-### 17.1 Factorial Function
+### 18.1 Factorial Function
 ```marathi
 कार्य फॅक्टोरिअल(n) {
     जर n <= 1 तर {
@@ -305,13 +326,14 @@ arg_list         = expression { "," expression } ;
 छापा("५ चे फॅक्टोरिअल: " + फॅक्टोरिअल(5))
 ```
 
-### 17.2 List Operations & Counted Loop
+### 18.2 Nested Lists & Counted Loop
 ```marathi
-चल संख्या = [10, 20, 30]
-जोडा(संख्या, 40)
+चल matrix = [[1, 2], [3, 4]]
 
-साठी (i = 0; i < लांबी(संख्या); i = i + 1) {
-    छापा(संख्या[i])
+साठी (i = 0; i < लांबी(matrix); i = i + 1) {
+    साठी (j = 0; j < लांबी(matrix[i]); j = j + 1) {
+        छापा(matrix[i][j])
+    }
 }
 ```
 

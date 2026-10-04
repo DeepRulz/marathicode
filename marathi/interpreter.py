@@ -75,10 +75,13 @@ class Interpreter:
     def execute(self, node: Any, env: Environment):
         if isinstance(node, Assignment):
             value = self.evaluate(node.expression, env)
-            env.assign(node.name, value)
+            if node.is_decl:
+                env.define(node.name, value)
+            else:
+                env.assign(node.name, value)
 
         elif isinstance(node, ListAssign):
-            lst = env.get(node.name, line=node.lineno)
+            lst = self.evaluate(node.target, env)
             if not isinstance(lst, list):
                 raise TypeOperationError("list indexing", type(lst).__name__, line=node.lineno)
             idx = self.evaluate(node.index, env)
@@ -180,10 +183,24 @@ class Interpreter:
             return lst[idx]
 
         elif isinstance(node, BinaryOp):
+            op = node.operator
+
+            # Short-circuit logical AND (आणि) and OR (किंवा)
+            if op == 'आणि':
+                left = self.evaluate(node.left, env)
+                if not left:
+                    return left
+                return self.evaluate(node.right, env)
+
+            if op == 'किंवा':
+                left = self.evaluate(node.left, env)
+                if left:
+                    return left
+                return self.evaluate(node.right, env)
+
             left = self.evaluate(node.left, env)
             right = self.evaluate(node.right, env)
 
-            op = node.operator
             if op == '+': return left + right
             if op == '-': return left - right
             if op == '*': return left * right
@@ -196,9 +213,6 @@ class Interpreter:
             if op == '<=': return left <= right
             if op == '==': return left == right
             if op == '!=': return left != right
-
-            if op == 'आणि': return bool(left and right)
-            if op == 'किंवा': return bool(left or right)
 
             raise MarathiRuntimeError(f"अवैध ऑपरेटर '{op}'", line=node.lineno)
 

@@ -1,6 +1,6 @@
 import sys
 from marathi.parser import parser
-from marathi.codegen import Interpreter
+from marathi.interpreter import Interpreter
 
 def main():
     if len(sys.argv) != 2:

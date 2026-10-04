@@ -88,21 +88,21 @@ def p_statement_var_decl(p):
     """
     statement : VAR IDENTIFIER EQUALS expression
     """
-    p[0] = Assignment(p[2], p[4], lineno=p.lineno(1))
+    p[0] = Assignment(p[2], p[4], is_decl=True, lineno=p.lineno(1))
 
 
 def p_statement_assign(p):
     """
     statement : IDENTIFIER EQUALS expression
     """
-    p[0] = Assignment(p[1], p[3], lineno=p.lineno(1))
+    p[0] = Assignment(p[1], p[3], is_decl=False, lineno=p.lineno(1))
 
 
 def p_statement_list_assign(p):
     """
-    statement : IDENTIFIER LBRACKET expression RBRACKET EQUALS expression
+    statement : expression LBRACKET expression RBRACKET EQUALS expression
     """
-    p[0] = ListAssign(p[1], p[3], p[6], lineno=p.lineno(1))
+    p[0] = ListAssign(p[1], p[3], p[6], lineno=p.lineno(2))
 
 
 # ---------- LOOPS ----------
@@ -118,14 +118,14 @@ def p_for_init_decl(p):
     """
     for_init : VAR IDENTIFIER EQUALS expression
     """
-    p[0] = Assignment(p[2], p[4], lineno=p.lineno(1))
+    p[0] = Assignment(p[2], p[4], is_decl=True, lineno=p.lineno(1))
 
 
 def p_for_init_assign(p):
     """
     for_init : IDENTIFIER EQUALS expression
     """
-    p[0] = Assignment(p[1], p[3], lineno=p.lineno(1))
+    p[0] = Assignment(p[1], p[3], is_decl=False, lineno=p.lineno(1))
 
 
 def p_statement_for(p):

@@ -1,6 +1,6 @@
 import unittest
 from marathi.parser import parser
-from marathi.codegen import Interpreter
+from marathi.interpreter import Interpreter
 
 def run_code(code: str):
     outputs = []

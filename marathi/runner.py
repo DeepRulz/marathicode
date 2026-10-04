@@ -1,5 +1,5 @@
 from marathi.parser import parser
-from marathi.codegen import Interpreter
+from marathi.interpreter import Interpreter
 
 code = """
 कार्य बेरीज(a, b) {
@@ -9,7 +9,7 @@ code = """
 चल x = 0
 पर्यंत x < 5 {
     छापा(x)
-    चल x = x + 1
+    x = x + 1
 }
 
 चल y = बेरीज(10, 20)

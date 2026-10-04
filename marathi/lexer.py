@@ -89,19 +89,24 @@ def get_line_snippet(input_text, lexpos):
 
 def t_COMMENT(t):
     r'//.*'
-    pass  # Ignore single-line comments
+    pass
+
+
+def parse_marathi_number(val_str):
+    devanagari_map = str.maketrans('०१२३४५६७८९', '0123456789')
+    norm_str = val_str.translate(devanagari_map)
+    return float(norm_str) if '.' in norm_str else int(norm_str)
 
 
 def t_NUMBER(t):
-    r'\d+(\.\d+)?'
-    t.value = float(t.value) if '.' in t.value else int(t.value)
+    r'[\d\u0966-\u096F]+(\.[\d\u0966-\u096F]+)?'
+    t.value = parse_marathi_number(t.value)
     return t
 
 
 def t_STRING(t):
     r'"([^"\\]|\\.)*"'
     val = t.value[1:-1]
-    # Handle string escape sequences
     val = val.replace(r'\n', '\n').replace(r'\t', '\t').replace(r'\"', '"').replace(r'\\', '\\')
     t.value = val
     return t

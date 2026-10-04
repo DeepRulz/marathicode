@@ -1,6 +1,6 @@
 import unittest
 from marathi.parser import parser
-from marathi.codegen import Interpreter
+from marathi.interpreter import Interpreter
 
 def run_code(code: str):
     outputs = []
@@ -25,7 +25,7 @@ class TestVariables(unittest.TestCase):
         """
         self.assertEqual(run_code(code), [15])
 
-    def test_variable_scope_and_shadowing(self):
+    def test_variable_block_scope_shadowing(self):
         code = """
         चल x = 100
         जर खरे तर {
@@ -34,7 +34,28 @@ class TestVariables(unittest.TestCase):
         }
         छापा(x)
         """
-        self.assertEqual(run_code(code), [200, 200])
+        self.assertEqual(run_code(code), [200, 100])
+
+    def test_nested_block_scope_mutation(self):
+        code = """
+        चल x = 10
+        जर खरे तर {
+            x = 20
+        }
+        छापा(x)
+        """
+        self.assertEqual(run_code(code), [20])
+
+    def test_variable_non_leaking_out_of_scope(self):
+        code = """
+        जर खरे तर {
+            चल गोपनीय = 99
+        }
+        छापा(गोपनीय)
+        """
+        from marathi.errors import UndefinedVariableError
+        with self.assertRaises(UndefinedVariableError):
+            run_code(code)
 
 if __name__ == '__main__':
     unittest.main()
